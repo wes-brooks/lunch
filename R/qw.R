@@ -21,8 +21,8 @@ qw$station = strsplit(qw$SCMFL, "[-_]") %>% sapply(function(x) x[1])
 qw %>%
     select(station, event, SAMPL, P00530) %>%
     melt(id.vars = c("station", "event", "SAMPL")) %>%
-    dcast(event~variable, fun.aggregate=mean, na.rm=TRUE) %>%
-    plot
+    dcast(event+station~variable, fun.aggregate=mean, na.rm=TRUE) %>%
+    ggplot + aes(x=station, y=P00530) + geom_boxplot()
 
 #Get lists of the events, stations, and output variables:
 events = unique(qw$event)
